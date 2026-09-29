@@ -1,16 +1,28 @@
 """Markdown → 精美PDF 生成脚本
 方案：Python Markdown → HTML → Edge浏览器渲染PDF（中文完美支持）
+自动发现并合并 chapter*.md 生成完整书籍PDF
 """
 
 import markdown
 import re
 import os
+import glob
 import subprocess
 import shutil
 
-# ===== 1. 读取 Markdown =====
-with open('demo_chapter.md', 'r', encoding='utf-8') as f:
-    md_content = f.read()
+# ===== 1. 自动发现并读取所有章节 =====
+chapter_files = sorted(glob.glob('chapter*.md'))
+if not chapter_files:
+    print("❌ 未找到任何章节文件（chapter*.md）！")
+    exit(1)
+
+print(f"📚 发现 {len(chapter_files)} 个章节:")
+md_content = ""
+for cf in chapter_files:
+    with open(cf, 'r', encoding='utf-8') as f:
+        chapter_text = f.read()
+    md_content += chapter_text + "\n\n"
+    print(f"   ✅ {cf}")
 
 # ===== 2. 加载 Pygments CSS（代码语法高亮） =====
 from pygments.formatters import HtmlFormatter
@@ -303,7 +315,7 @@ FULL_HTML = f"""<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<title>Python：2周从入门到精通 — 示例章节</title>
+<title>Python：2周从入门到精通</title>
 <script>
 MathJax = {{
   tex: {{
@@ -327,13 +339,13 @@ MathJax = {{
 </html>"""
 
 # ===== 8. 输出 HTML 文件 =====
-html_path = 'demo_output.html'
+html_path = 'output.html'
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(FULL_HTML)
-print("✅ HTML 已生成: demo_output.html")
+print("✅ HTML 已生成: output.html")
 
 # ===== 9. 用 Edge/Chrome 无头模式打印 PDF =====
-pdf_path = os.path.abspath('demo_output.pdf')
+pdf_path = os.path.abspath('output.pdf')
 html_abs = os.path.abspath(html_path)
 file_url = f'file:///{html_abs.replace(chr(92), "/")}'
 
@@ -380,7 +392,7 @@ if not browser_path:
 
 if not browser_path:
     print("❌ 未找到 Edge 或 Chrome 浏览器！")
-    print("   请手动用浏览器打开 demo_output.html，然后 Ctrl+P 另存为 PDF")
+    print("   请手动用浏览器打开 output.html，然后 Ctrl+P 另存为 PDF")
     print(f"   文件位置: {html_abs}")
 else:
     print(f"   使用 {browser_name}: {browser_path}")
@@ -400,7 +412,7 @@ else:
 
     if result.returncode == 0 and os.path.exists(pdf_path):
         file_size = os.path.getsize(pdf_path)
-        print(f"✅ PDF 已生成: demo_output.pdf ({file_size / 1024:.1f} KB)")
+        print(f"✅ PDF 已生成: output.pdf ({file_size / 1024:.1f} KB)")
         print("   请打开查看，中文应该完美显示！")
     else:
         print(f"❌ PDF 生成失败 (exit code: {result.returncode})")

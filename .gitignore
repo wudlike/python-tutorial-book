@@ -1,6 +1,6 @@
 # PDF / HTML 生成产物
-demo_output.html
-demo_output.pdf
+output.html
+output.pdf
 
 # Python
 __pycache__/
