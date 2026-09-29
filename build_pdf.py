@@ -352,14 +352,16 @@ MathJax = {{
 </body>
 </html>"""
 
+OUTPUT_NAME = '极简Python_从入门到精通'
+
 # ===== 8. 输出 HTML 文件 =====
-html_path = 'output.html'
+html_path = f'{OUTPUT_NAME}.html'
 with open(html_path, 'w', encoding='utf-8') as f:
     f.write(FULL_HTML)
-print("✅ HTML 已生成: output.html")
+print(f"✅ HTML 已生成: {html_path}")
 
 # ===== 9. 用 Edge/Chrome 无头模式打印 PDF =====
-pdf_path = os.path.abspath('output.pdf')
+pdf_path = os.path.abspath(f'{OUTPUT_NAME}.pdf')
 html_abs = os.path.abspath(html_path)
 file_url = f'file:///{html_abs.replace(chr(92), "/")}'
 
@@ -406,7 +408,7 @@ if not browser_path:
 
 if not browser_path:
     print("❌ 未找到 Edge 或 Chrome 浏览器！")
-    print("   请手动用浏览器打开 output.html，然后 Ctrl+P 另存为 PDF")
+    print(f"   请手动用浏览器打开 {html_path}，然后 Ctrl+P 另存为 PDF")
     print(f"   文件位置: {html_abs}")
 else:
     print(f"   使用 {browser_name}: {browser_path}")
@@ -426,7 +428,7 @@ else:
 
     if result.returncode == 0 and os.path.exists(pdf_path):
         file_size = os.path.getsize(pdf_path)
-        print(f"✅ PDF 已生成: output.pdf ({file_size / 1024:.1f} KB)")
+        print(f"✅ PDF 已生成: {OUTPUT_NAME}.pdf ({file_size / 1024:.1f} KB)")
         print("   请打开查看，中文应该完美显示！")
     else:
         print(f"❌ PDF 生成失败 (exit code: {result.returncode})")
