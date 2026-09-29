@@ -11,7 +11,14 @@ import subprocess
 import shutil
 
 # ===== 1. 自动发现并读取所有章节目录中的 .md 文件 =====
-chapter_dirs = sorted([d for d in glob.glob('chapter*') if os.path.isdir(d)])
+def _chapter_sort_key(dirname):
+    m = re.search(r'chapter(\d+)', dirname)
+    return int(m.group(1)) if m else 0
+
+chapter_dirs = sorted(
+    [d for d in glob.glob('chapter*') if os.path.isdir(d)],
+    key=_chapter_sort_key
+)
 if not chapter_dirs:
     print("❌ 未找到任何章节目录（chapter*/）！")
     exit(1)
@@ -273,6 +280,114 @@ li {
 .highlight .mi { color: #0000cf }
 """
 
+# ===== 3.5 生成目录页 =====
+def _slugify(text):
+    """将标题转换为 Python Markdown 兼容的锚点 ID"""
+    import unicodedata
+    text = text.lower().strip()
+    text = ''.join(c for c in text if c.isalnum() or c in '-_ ')
+    text = text.replace(' ', '-')
+    return text.strip('-')
+
+def _build_toc_html(md_text):
+    """从 markdown 文本中提取标题并生成目录 HTML
+    
+    生成结构：
+        第一部分：Python基础入门            （居中加粗）
+        第1章：...                        （# 一级标题）
+        1.1 ...                           （## 二级标题）
+    """
+    # 先用正则从全文提取各分部标题（可能跨多行）
+    # 在文本中插入行内标记，后续逐行扫描时就能识别
+    marked_text = md_text
+    
+    # 处理多行 div（第一部分~第三部分）
+    multi_part = re.compile(
+        r'<div[^>]*>\s*\n\s*(第[一二三四五]部分[：:]\S+)\s*\n\s*</div>',
+        re.MULTILINE
+    )
+    marked_text = multi_part.sub(r'<!--PART_MARKER::\1-->', marked_text)
+    
+    # 处理单行 div（第四部分、第五部分、附录）
+    single_part = re.compile(
+        r'<div[^>]*>(第[一二三四五]部分[：:]\S+)</div>'
+    )
+    marked_text = single_part.sub(r'<!--PART_MARKER::\1-->', marked_text)
+    
+    single_appendix = re.compile(
+        r'<div[^>]*>(附录)</div>'
+    )
+    marked_text = single_appendix.sub(r'<!--PART_MARKER::\1-->', marked_text)
+    
+    # 扫描结果
+    entries = []
+    
+    for line in marked_text.split('\n'):
+        line_stripped = line.strip()
+        
+        # 检查分部标题标记
+        pm = re.match(r'<!--PART_MARKER::(.+)-->', line_stripped)
+        if pm:
+            entries.append(('part', pm.group(1), None))
+            continue
+        
+        # 检查 markdown 标题（只取 # 和 ##）
+        m = re.match(r'^(#{1,2})\s+(.+)$', line_stripped)
+        if m:
+            level = len(m.group(1))
+            title = m.group(2).strip()
+            
+            if level == 1:
+                # 章标题判断
+                is_chapter = False
+                if re.match(r'^(第\d+章|附录[A-Z])', title):
+                    is_chapter = True
+                elif title in ('2. 第一个Python程序', '3. Python基础语法'):
+                    is_chapter = True
+                
+                if is_chapter:
+                    anchor = _slugify(title)
+                    entries.append(('chapter', title, anchor))
+            elif level == 2:
+                # 节标题：以 "N.N" 开头（如 1.1, 12.3）
+                if re.match(r'^\d+\.\d+\s', title):
+                    anchor = _slugify(title)
+                    entries.append(('section', title, anchor))
+    
+    return entries
+
+toc_entries = _build_toc_html(md_content)
+
+# 生成带锚点链接的目录 HTML
+toc_html_parts = []
+toc_html_parts.append('<div style="page-break-after: always;">')
+toc_html_parts.append('<h1 style="text-align: center; border-bottom: none; font-size: 22pt;">目  录</h1>')
+toc_html_parts.append('<div style="margin-top: 20pt;">')
+
+for entry_type, title, anchor in toc_entries:
+    if entry_type == 'part':
+        # 分部标题——居中、加粗、蓝色
+        toc_html_parts.append(
+            f'<p style="text-align: center; font-size: 13pt; font-weight: bold; color: #1565C0; '
+            f'margin: 18pt 0 10pt 0; padding: 8pt 0; '
+            f'border-top: 2px solid #BBDEFB; border-bottom: 2px solid #BBDEFB;">{title}</p>'
+        )
+    elif entry_type == 'chapter':
+        # 章标题——加粗，可点击跳转
+        toc_html_parts.append(
+            f'<p style="font-size: 11pt; font-weight: bold; margin: 10pt 0 4pt 0;">'
+            f'<a href="#{anchor}" style="color: #333; text-decoration: none;">{title}</a></p>'
+        )
+    elif entry_type == 'section':
+        # 节标题——缩进，可点击跳转
+        toc_html_parts.append(
+            f'<p style="font-size: 10pt; margin: 2pt 0 2pt 24pt; color: #555;">'
+            f'<a href="#{anchor}" style="color: #555; text-decoration: none;">{title}</a></p>'
+        )
+
+toc_html_parts.append('</div></div>')
+TOC_HTML = '\n'.join(toc_html_parts)
+
 # ===== 4. 预处理：LaTeX盒子 → HTML占位符（避免Markdown跳过HTML块内解析） =====
 BOX_PLACEHOLDERS = {
     r'\\begin\{definitionbox\}': '<!--__BOXDEF__-->',
@@ -348,6 +463,7 @@ MathJax = {{
 </style>
 </head>
 <body>
+{TOC_HTML}
 {html_body}
 </body>
 </html>"""

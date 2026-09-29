@@ -9,7 +9,7 @@ numbersections: true
 ---
 
 
-<div style="text-align: center; padding-top: 280px; color: #1565C0; font-size: 26pt; font-weight: bold; page-break-after: always;">
+<div style="text-align: center; padding-top: 280px; color: #1565C0; font-size: 26pt; font-weight: bold; page-break-before: always; page-break-after: always;">
 第一部分：Python基础入门
 </div>
 

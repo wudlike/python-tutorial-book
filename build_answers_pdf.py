@@ -3,6 +3,7 @@
 """
 
 import markdown
+import re
 import os
 import glob
 import subprocess
@@ -13,7 +14,14 @@ if not os.path.isdir('answers'):
     print("❌ 未找到 answers/ 目录！")
     exit(1)
 
-chapter_dirs = sorted([d for d in glob.glob('answers/*') if os.path.isdir(d)])
+def _answers_sort_key(dirname):
+    m = re.search(r'chapter(\d+)', dirname)
+    return int(m.group(1)) if m else 0
+
+chapter_dirs = sorted(
+    [d for d in glob.glob('answers/*') if os.path.isdir(d)],
+    key=_answers_sort_key
+)
 if not chapter_dirs:
     print("❌ answers/ 目录下没有章节文件夹！")
     exit(1)

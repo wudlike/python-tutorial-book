@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - 我的技术博客{% endblock %}
+
+{% block content %}
+    <h2>最新文章</h2>
+
+    {% if posts %}
+        {% for post in posts %}
+        <article class="post-card">
+            <h3>
+                <a href="{{ url_for('show_post', post_id=post.id) }}">
+                    {{ post.title }}
+                </a>
+            </h3>
+            <p class="meta">
+                📅 {{ post.created_at }}
+                {% if post.tags %}
+                | 🏷️ {{ post.tags }}
+                {% endif %}
+            </p>
+            <p class="summary">{{ post.content[:150] }}{% if post.content|length > 150 %}...{% endif %}</p>
+            <div class="actions">
+                <a href="{{ url_for('edit_post', post_id=post.id) }}" class="btn">编辑</a>
+                <form method="post" action="{{ url_for('delete_post', post_id=post.id) }}"
+                      style="display:inline"
+                      onsubmit="return confirm('确定要删除吗？')">
+                    <button type="submit" class="btn btn-danger">删除</button>
+                </form>
+            </div>
+        </article>
+        {% endfor %}
+    {% else %}
+        <p>还没有文章，<a href="{{ url_for('create_post') }}">写一篇吧！</a></p>
+    {% endif %}
+{% endblock %}
