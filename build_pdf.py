@@ -60,6 +60,14 @@ h3 {
     margin-top: 16pt;
 }
 
+h4 {
+    color: #7B1FA2;
+    font-size: 11pt;
+    margin-top: 14pt;
+    padding-left: 6pt;
+    border-left: 3px solid #CE93D8;
+}
+
 /* ===== 定义框（蓝色） ===== */
 .definitionbox {
     background: #E3F2FD;
@@ -67,6 +75,8 @@ h3 {
     border-radius: 6px;
     padding: 14pt 18pt;
     margin: 16pt 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 .definitionbox .box-title {
     color: #1565C0;
@@ -82,6 +92,8 @@ h3 {
     border-radius: 6px;
     padding: 14pt 18pt;
     margin: 16pt 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 .tipbox .box-title {
     color: #2E7D32;
@@ -97,6 +109,8 @@ h3 {
     border-radius: 6px;
     padding: 14pt 18pt;
     margin: 16pt 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 .warningbox .box-title {
     color: #E65100;
@@ -112,6 +126,8 @@ h3 {
     border-radius: 6px;
     padding: 14pt 18pt;
     margin: 16pt 0;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 .notebox .box-title {
     color: #7B1FA2;
@@ -134,6 +150,8 @@ pre {
     margin: 12pt 0;
     white-space: pre-wrap;
     word-break: break-all;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 code {
@@ -158,6 +176,8 @@ table {
     border-collapse: collapse;
     margin: 14pt 0;
     font-size: 10pt;
+    page-break-inside: avoid;
+    break-inside: avoid;
 }
 
 thead {
