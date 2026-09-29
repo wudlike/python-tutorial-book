@@ -1,17 +1,4 @@
----
-title: "Python：2周从入门到精通"
-author: "伍德亮"
-date: "2026年9月"
-lang: zh-CN
-toc: true
-toc-depth: 3
-numbersections: true
----
-# 第一部分：Python基础入门
-
-# 1. Python简介与环境安装——编程如此简单
-
-## 1.1 为什么用Python——从小白到全球霸主的传奇
+﻿## 1.1 为什么用Python——从小白到全球霸主的传奇
 
 在开始编写第一行 Python 代码之前，我们先来回答一个根本性的问题：**为什么是 Python？** 放眼望去，编程语言成百上千，C、C++、Java、JavaScript、Go、Rust……每一门语言都有人在用，为什么 Python 会成为今天**全球最热门的编程语言**？
 
@@ -315,7 +302,3 @@ Python 是一门**解释型语言**：代码在运行时由解释器逐行翻译
 ---
 
 在了解了 Python 的传奇历史之后，下一节我们将动手**安装 Python 环境**——从零开始，让 Python 在你的电脑上跑起来。
-
-## 1.2 环境安装——三步让你的电脑"学会"Python
-
-（待续）

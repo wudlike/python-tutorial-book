@@ -10,19 +10,24 @@ import glob
 import subprocess
 import shutil
 
-# ===== 1. 自动发现并读取所有章节 =====
-chapter_files = sorted(glob.glob('chapter*.md'))
-if not chapter_files:
-    print("❌ 未找到任何章节文件（chapter*.md）！")
+# ===== 1. 自动发现并读取所有章节目录中的 .md 文件 =====
+chapter_dirs = sorted([d for d in glob.glob('chapter*') if os.path.isdir(d)])
+if not chapter_dirs:
+    print("❌ 未找到任何章节目录（chapter*/）！")
     exit(1)
 
-print(f"📚 发现 {len(chapter_files)} 个章节:")
+print(f"📚 发现 {len(chapter_dirs)} 个章节目录:")
 md_content = ""
-for cf in chapter_files:
-    with open(cf, 'r', encoding='utf-8') as f:
-        chapter_text = f.read()
-    md_content += chapter_text + "\n\n"
-    print(f"   ✅ {cf}")
+for d in chapter_dirs:
+    md_files = sorted(glob.glob(os.path.join(d, '*.md')))
+    if not md_files:
+        print(f"   ⚠️  {d}/ （空目录，跳过）")
+        continue
+    for mf in md_files:
+        with open(mf, 'r', encoding='utf-8') as f:
+            chapter_text = f.read()
+        md_content += chapter_text + "\n\n"
+        print(f"   ✅ {mf}")
 
 # ===== 2. 加载 Pygments CSS（代码语法高亮） =====
 from pygments.formatters import HtmlFormatter
