@@ -33,24 +33,29 @@ CSS_STYLE = """
 /* ===== 页面设置 ===== */
 @page {
     size: A4;
-    margin: 2.5cm;
+    margin: 2.2cm;
 }
 
 body {
     font-family: "SimSun", "宋体", "Noto Serif SC", serif;
     font-size: 10.5pt;
-    line-height: 1.5;
+    line-height: 1.35;
     color: #333333;
     max-width: 100%;
+}
+
+p {
+    margin: 0 0 4pt 0;
 }
 
 /* ===== 标题颜色 ===== */
 h1 {
     color: #1565C0;
-    font-size: 19pt;
+    font-size: 18pt;
     border-bottom: 3px solid #1565C0;
-    padding-bottom: 8pt;
-    margin-top: 26pt;
+    padding-bottom: 6pt;
+    margin-top: 20pt;
+    margin-bottom: 10pt;
     page-break-before: always;
 }
 
@@ -60,22 +65,25 @@ h1:first-of-type {
 
 h2 {
     color: #2E7D32;
-    font-size: 14.5pt;
-    margin-top: 20pt;
+    font-size: 14pt;
+    margin-top: 14pt;
+    margin-bottom: 8pt;
     padding-left: 10pt;
     border-left: 4px solid #2E7D32;
 }
 
 h3 {
     color: #E65100;
-    font-size: 12pt;
-    margin-top: 16pt;
+    font-size: 11.5pt;
+    margin-top: 12pt;
+    margin-bottom: 6pt;
 }
 
 h4 {
     color: #7B1FA2;
     font-size: 11pt;
-    margin-top: 14pt;
+    margin-top: 10pt;
+    margin-bottom: 4pt;
     padding-left: 6pt;
     border-left: 3px solid #CE93D8;
 }
@@ -83,69 +91,69 @@ h4 {
 /* ===== 定义框（蓝色） ===== */
 .definitionbox {
     background: #E3F2FD;
-    border-left: 6px solid #1565C0;
-    border-radius: 6px;
-    padding: 14pt 18pt;
-    margin: 16pt 0;
+    border-left: 5px solid #1565C0;
+    border-radius: 5px;
+    padding: 10pt 14pt;
+    margin: 10pt 0;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 .definitionbox .box-title {
     color: #1565C0;
-    font-size: 12pt;
+    font-size: 11.5pt;
     font-weight: bold;
-    margin-bottom: 8pt;
+    margin-bottom: 4pt;
 }
 
 /* ===== 提示框（绿色） ===== */
 .tipbox {
     background: #E8F5E9;
-    border-left: 6px solid #2E7D32;
-    border-radius: 6px;
-    padding: 14pt 18pt;
-    margin: 16pt 0;
+    border-left: 5px solid #2E7D32;
+    border-radius: 5px;
+    padding: 10pt 14pt;
+    margin: 10pt 0;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 .tipbox .box-title {
     color: #2E7D32;
-    font-size: 12pt;
+    font-size: 11.5pt;
     font-weight: bold;
-    margin-bottom: 8pt;
+    margin-bottom: 4pt;
 }
 
 /* ===== 警告框（橙色） ===== */
 .warningbox {
     background: #FFF3E0;
-    border-left: 6px solid #E65100;
-    border-radius: 6px;
-    padding: 14pt 18pt;
-    margin: 16pt 0;
+    border-left: 5px solid #E65100;
+    border-radius: 5px;
+    padding: 10pt 14pt;
+    margin: 10pt 0;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 .warningbox .box-title {
     color: #E65100;
-    font-size: 12pt;
+    font-size: 11.5pt;
     font-weight: bold;
-    margin-bottom: 8pt;
+    margin-bottom: 4pt;
 }
 
 /* ===== 补充知识框（紫色） ===== */
 .notebox {
     background: #F3E5F5;
-    border-left: 6px solid #7B1FA2;
-    border-radius: 6px;
-    padding: 14pt 18pt;
-    margin: 16pt 0;
+    border-left: 5px solid #7B1FA2;
+    border-radius: 5px;
+    padding: 10pt 14pt;
+    margin: 10pt 0;
     page-break-inside: avoid;
     break-inside: avoid;
 }
 .notebox .box-title {
     color: #7B1FA2;
-    font-size: 12pt;
+    font-size: 11.5pt;
     font-weight: bold;
-    margin-bottom: 8pt;
+    margin-bottom: 4pt;
 }
 
 /* ===== 代码块 ===== */
@@ -153,13 +161,13 @@ pre {
     background: #FAFAFA;
     border: 1px solid #E0E0E0;
     border-left: 4px solid #1976D2;
-    border-radius: 6px;
-    padding: 12pt 14pt;
+    border-radius: 5px;
+    padding: 10pt 12pt;
     font-family: "Consolas", "Courier New", "Source Code Pro", monospace;
     font-size: 9pt;
-    line-height: 1.5;
+    line-height: 1.4;
     overflow-x: auto;
-    margin: 12pt 0;
+    margin: 10pt 0;
     white-space: pre-wrap;
     word-break: break-all;
     page-break-inside: avoid;
@@ -186,7 +194,7 @@ pre code {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 14pt 0;
+    margin: 10pt 0;
     font-size: 10pt;
     page-break-inside: avoid;
     break-inside: avoid;
@@ -198,13 +206,13 @@ thead {
 }
 
 th {
-    padding: 10pt 12pt;
+    padding: 8pt 10pt;
     text-align: left;
     font-weight: bold;
 }
 
 td {
-    padding: 8pt 12pt;
+    padding: 6pt 10pt;
     border-bottom: 1px solid #E0E0E0;
 }
 
@@ -217,8 +225,8 @@ img {
     max-width: 95%;
     height: auto;
     display: block;
-    margin: 18pt auto;
-    border-radius: 6px;
+    margin: 12pt auto;
+    border-radius: 5px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
@@ -233,11 +241,12 @@ em {
 
 /* ===== 列表 ===== */
 ul, ol {
-    padding-left: 28pt;
+    padding-left: 24pt;
+    margin: 4pt 0;
 }
 
 li {
-    margin: 5pt 0;
+    margin: 2pt 0;
 }
 
 /* ===== 数学公式 ===== */
