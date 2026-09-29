@@ -1,11 +1,8 @@
 ---
-title: "Python：2周从入门到精通"
-author: "伍德亮"
-date: "2026年9月"
-lang: zh-CN
-toc: true
-toc-depth: 3
-numbersections: true
+书名: "Python：2周从入门到精通"
+作者: "伍德亮"
+出版日期: "2026年9月"
+语言: zh-CN
 ---
 
 
