@@ -1,0 +1,117 @@
+% ============================
+% 中文支持 + 字体
+% ============================
+\usepackage{xeCJK}
+\setCJKmainfont{SimSun}
+\setCJKsansfont{SimHei}
+\setCJKmonofont{KaiTi}
+
+% ============================
+% 页面设置
+% ============================
+\usepackage{geometry}
+\geometry{a4paper, margin=2.5cm}
+
+% ============================
+% 丰富的颜色定义
+% ============================
+\usepackage{xcolor}
+\definecolor{definition_bg}{HTML}{E3F2FD}
+\definecolor{definition_fg}{HTML}{1565C0}
+\definecolor{tip_bg}{HTML}{E8F5E9}
+\definecolor{tip_fg}{HTML}{2E7D32}
+\definecolor{warning_bg}{HTML}{FFF3E0}
+\definecolor{warning_fg}{HTML}{E65100}
+\definecolor{note_bg}{HTML}{F3E5F5}
+\definecolor{note_fg}{HTML}{7B1FA2}
+\definecolor{code_bg}{HTML}{FAFAFA}
+\definecolor{chapter_color}{HTML}{1976D2}
+\definecolor{section_color}{HTML}{388E3C}
+
+% ============================
+% 彩色盒子（核心：用 tcolorbox）
+% ============================
+\usepackage[most]{tcolorbox}
+\usepackage{fontawesome5}
+
+\newtcolorbox{definitionbox}{
+  colback=definition_bg,
+  colframe=definition_fg,
+  arc=4pt,
+  boxrule=1.5pt,
+  leftrule=6pt,
+  title=\textbf{\textcolor{definition_fg}{\faBook\ 定义}},
+  coltitle=definition_fg,
+  fonttitle=\large\bfseries,
+  before skip=12pt,
+  after skip=12pt
+}
+
+\newtcolorbox{tipbox}{
+  colback=tip_bg,
+  colframe=tip_fg,
+  arc=4pt,
+  boxrule=1.5pt,
+  leftrule=6pt,
+  title=\textbf{\textcolor{tip_fg}{\faLightbulb\ 提示}},
+  coltitle=tip_fg,
+  fonttitle=\large\bfseries,
+  before skip=12pt,
+  after skip=12pt
+}
+
+\newtcolorbox{warningbox}{
+  colback=warning_bg,
+  colframe=warning_fg,
+  arc=4pt,
+  boxrule=1.5pt,
+  leftrule=6pt,
+  title=\textbf{\textcolor{warning_fg}{\faExclamationTriangle\ 注意}},
+  coltitle=warning_fg,
+  fonttitle=\large\bfseries,
+  before skip=12pt,
+  after skip=12pt
+}
+
+\newtcolorbox{notebox}{
+  colback=note_bg,
+  colframe=note_fg,
+  arc=4pt,
+  boxrule=1.5pt,
+  leftrule=6pt,
+  title=\textbf{\textcolor{note_fg}{\faInfoCircle\ 补充知识}},
+  coltitle=note_fg,
+  fonttitle=\large\bfseries,
+  before skip=12pt,
+  after skip=12pt
+}
+
+% ============================
+% 列表间距优化
+% ============================
+\usepackage{enumitem}
+\setlist{nosep, leftmargin=*}
+
+% ============================
+% 表格颜色
+% ============================
+\usepackage{colortbl}
+\definecolor{table_header}{HTML}{1976D2}
+\definecolor{table_row_odd}{HTML}{F5F5F5}
+\definecolor{table_row_even}{HTML}{FFFFFF}
+
+% ============================
+% 超链接颜色
+% ============================
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=definition_fg,
+  urlcolor=section_color,
+  citecolor=note_fg
+}
+
+% ============================
+% 数学相关
+% ============================
+\usepackage{amsmath, amssymb, amsfonts}
