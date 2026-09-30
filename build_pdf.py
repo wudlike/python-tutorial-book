@@ -388,6 +388,10 @@ for entry_type, title, anchor in toc_entries:
 toc_html_parts.append('</div></div>')
 TOC_HTML = '\n'.join(toc_html_parts)
 
+# ===== 3.6 前言（从外部文件读取） =====
+with open(os.path.join(os.path.dirname(__file__), 'foreword.html'), 'r', encoding='utf-8') as f:
+    FOREWORD_HTML = f.read()
+
 # ===== 4. 预处理：LaTeX盒子 → HTML占位符（避免Markdown跳过HTML块内解析） =====
 BOX_PLACEHOLDERS = {
     r'\\begin\{definitionbox\}': '<!--__BOXDEF__-->',
@@ -464,6 +468,7 @@ MathJax = {{
 </head>
 <body>
 {TOC_HTML}
+{FOREWORD_HTML}
 {html_body}
 </body>
 </html>"""
